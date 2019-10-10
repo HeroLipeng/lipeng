@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lipeng.dao.GoodsMapper">
+
+	<select id="getGoodsList" resultType="Goods">
+		SELECT * FROM goods a LEFT JOIN `types` b ON a.`tid`=b.`tid` 
+		<where>
+			<if test="null!=gname and gname!=''">gname like '%${gname}%'</if>
+		</where>
+	</select>
+	<!-- 添加 -->
+	<insert id="addGoods">
+		insert into goods set gname=#{gname},price=#{price},tid=#{tid},kid=#{kid}
+	</insert>
+	<!-- 批量删除 -->
+	<delete id="delGoods">
+		delete from goods where gid in(${gid})
+	</delete>
+	<!-- 查询单条商品id -->
+	<select id="getGoodsById" resultType="goods">
+			select * from goods where gid=#{gid}
+	</select>
+	<!-- 修改 -->
+		<update id="updateGoods">
+			update goods set  gname=#{gname},price=#{price},tid=#{tid},kid=#{kid} where gid=#{gid}
+		</update>
+</mapper>
